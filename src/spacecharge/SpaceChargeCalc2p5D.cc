@@ -110,7 +110,8 @@ void SpaceChargeCalc2p5D::trackBunch(Bunch* bunch, double length, BaseBoundary2D
 		if(boundary == NULL || (boundary != NULL && boundary->isInside(x,y) == BaseBoundary2D::IS_INSIDE)){
 			phiGrid->calcGradient(x,y,ex,ey);	
 			//std::cout<<" debug ip="<<i<<" x="<<x<<" y="<<y<<" z="<<z<<" ex="<<ex<<" ey="<<ey<<" ez="<<ez<<" rho_z="<< zGrid->getValue(z) <<std::endl;		
-			Lfactor = - zGrid->getValue(z) * factor;
+			//Lfactor = - zGrid->getValue(z) * factor;
+			Lfactor = - zGrid->getValueSmoothed(z) * factor;
 			//std::cerr<<" debug zgrid="<<zGrid->getValue(z)<<" lfactor="<<Lfactor;		
 			bunch->xp(i) += ex * Lfactor;
 			bunch->yp(i) += ey * Lfactor;	
@@ -221,7 +222,8 @@ void SpaceChargeCalc2p5D::bunchAnalysis(Bunch* bunch, double& totalMacrosize, Ba
 	zGrid->setZero();
 	
 	rhoGrid->binBunch(bunch);
-	zGrid->binBunch(bunch);
+	//zGrid->binBunch(bunch);
+	zGrid->binBunchSmoothed(bunch);
 	
 	rhoGrid->synchronizeMPI(bunch->getMPI_Comm_Local());
 	zGrid->synchronizeMPI(bunch->getMPI_Comm_Local());
