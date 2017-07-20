@@ -48,6 +48,7 @@ Grid1D::Grid1D(int zSize, double zMin, double zMax):CppPyWrapper(NULL)
   zSize_ = zSize;
   zMin_  = zMin;
   zMax_  = zMax;
+  length_= 0.0;
   init();
   setZero();
 }
