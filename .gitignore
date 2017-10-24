@@ -4,4 +4,5 @@ bin/pyORBIT
 *.pyc
 *~
 *.o
+ext/PTC
 

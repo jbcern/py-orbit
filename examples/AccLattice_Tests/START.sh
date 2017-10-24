@@ -12,4 +12,11 @@ if [ ! -n "$2" ]
     exit $E_BADARGS
 fi
 
+source ../../customEnvironment.sh
+echo "customEnvironment done"
+source ../../../virtualenvs/py2.7/bin/activate
+echo "python packages charged"
+source /cvmfs/projects.cern.ch/intelsw/psxe/linux/all-setup.sh
+echo "ifort charged (necessary for running)"
+
 mpirun -np $2 ${ORBIT_ROOT}/bin/pyORBIT $1

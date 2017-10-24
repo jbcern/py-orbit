@@ -32,14 +32,14 @@ public:
 	SpaceChargeCalc2p5D(int xSize, int ySize, int zSize, double xy_ratio_in);
 
 	SpaceChargeCalc2p5D(int xSize, int ySize, int zSize);
-	
+
 	/** Destructor */
 	virtual ~SpaceChargeCalc2p5D();
 	
 	/** Calculates space charge and applies the transverse and 
 	longitudinal SC kicks to the macro-particles in the bunch. */
 	void trackBunch(Bunch* bunch, double length, BaseBoundary2D* boundary);
-	
+
 	/** Returns the 2D rho grid with a transverse density distribution. **/
 	Grid2D* getRhoGrid();
 
@@ -51,7 +51,8 @@ public:
 	
 private:
 	/** Analyses the bunch and does bining. */
- void bunchAnalysis(Bunch* bunch, double& totalMacrosize, BaseBoundary2D* boundary); 
+	void bunchAnalysis(Bunch* bunch, double& totalMacrosize, BaseBoundary2D* boundary);
+  
 	
 protected:
 	PoissonSolverFFT2D* poissonSolver;

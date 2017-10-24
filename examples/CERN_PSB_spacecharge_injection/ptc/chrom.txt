@@ -1,0 +1,2 @@
+GETCHROMATICITY
+return

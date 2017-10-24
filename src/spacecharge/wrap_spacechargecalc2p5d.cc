@@ -112,8 +112,8 @@ extern "C" {
 		Py_INCREF(cpp_grid1d->getPyWrapper());
 		Py_DECREF(mod);
 		return pyGrid1D;
-  }			
-	
+  }
+
     //trackBunch(Bunch* bunch, double length[,BaseBoundary2D* boundary])
   static PyObject* SpaceChargeCalc2p5D_trackBunch(PyObject *self, PyObject *args){
 		int nVars = PyTuple_Size(args);
@@ -122,7 +122,7 @@ extern "C" {
 		PyObject* pyBunch;
 		PyObject* pyBoundary;
 		double length;
-		
+
 		if(nVars == 2 ||  nVars == 3){
 		  if (nVars == 2){
 		    if(!PyArg_ParseTuple(args,"Od:trackBunch",&pyBunch,&length)){
@@ -157,6 +157,7 @@ extern "C" {
 		return Py_None;  
   }
 
+//*/
   //-----------------------------------------------------
   //destructor for python SpaceChargeCalc2p5D class (__del__ method).
   //-----------------------------------------------------

@@ -36,29 +36,29 @@ class PTC_Lattice(TEAPOT_Lattice):
 	def __init__(self, name = "no name"):
 		TEAPOT_Lattice.__init__(self, name)
 
-        def readPTC(self, PTC_File):
-                """
-                Reads the PTC file input and initializes all structures.
-                Input PTC_File is the flat PTC file.
-                """
+	def readPTC(self, PTC_File):
+		"""
+		Reads the PTC file input and initializes all structures.
+		Input PTC_File is the flat PTC file.
+		"""
 		self.setName(PTC_File)
-                length_of_name = len(PTC_File)
-                ptc_init_(PTC_File, length_of_name - 1)
-				(betax, betay, alphax, alphay, etax, etapx, etay, etapy, orbitx, orbitpx, orbity, orbitpy) =\
-				    ptc_get_twiss_init_()
-				self.betax0   = betax
-				self.betay0   = betay
-				self.alphax0  = alphax
-				self.alphay0  = alphay
-				self.etax0    = etax
-				self.etapx0   = etapx
-				self.etay0    = etay
-				self.etapy0   = etapy
-				self.orbitx0  = orbitx
-				self.orbitpx0 = orbitpx
-				self.orbity0  = orbity
-				self.orbitpy0 = orbitpy
-                (nNodes, nHarm, lRing, gammaT) = ptc_get_ini_params_()
+		length_of_name = len(PTC_File)
+		ptc_init_(PTC_File, length_of_name - 1)
+		(betax, betay, alphax, alphay, etax, etapx, etay, etapy, orbitx, orbitpx, orbity, orbitpy) =\
+		    ptc_get_twiss_init_()
+		self.betax0   = betax
+		self.betay0   = betay
+		self.alphax0  = alphax
+		self.alphay0  = alphay
+		self.etax0    = etax
+		self.etapx0   = etapx
+		self.etay0    = etay
+		self.etapy0   = etapy
+		self.orbitx0  = orbitx
+		self.orbitpx0 = orbitpx
+		self.orbity0  = orbity
+		self.orbitpy0 = orbitpy
+		(nNodes, nHarm, lRing, gammaT) = ptc_get_ini_params_()
 		self.nNodes = nNodes
 		self.nHarm  = nHarm
 		self.lRing  = lRing

@@ -1,0 +1,4 @@
+SET ORBIT RAMPING
+ramp
+BR.BSW1      "./Tables/BS_ramp.TXT"      0.0
+return

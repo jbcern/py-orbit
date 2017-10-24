@@ -3,7 +3,7 @@ DIRS += ./ecloud
 #DIRS += ./intsystem
 #DIRS += ./laserstripping
 #DIRS += ./H0starkeffect
-#DIRS += ./PTC
+DIRS += ./PTC
 
 #========rules=========================
 
