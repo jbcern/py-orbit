@@ -50,14 +50,14 @@ from orbit.collimation import addTeapotCollimatorNode
 from collimator import Collimator
 
 # dictionary
-from lib.output_dictionary import *
+from output_dictionary import *
 
 print "Start ..."
 
 #----------------------------------------------
 # Create folder structure
 #----------------------------------------------
-from lib.mpi_helpers import mpi_mkdir_p
+from mpi_helpers import mpi_mkdir_p
 #mpi_mkdir_p('Input')
 mpi_mkdir_p('Output')
 
