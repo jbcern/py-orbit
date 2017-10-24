@@ -157,6 +157,26 @@ extern "C" {
 		return Py_None;  
   }
 
+  //setSmoothBinning(int smooth_flag) set the flag of the longitudinal binning method (true=smooth, false(default)=linear)
+  static PyObject* SpaceChargeCalc2p5D_setSmoothBinning(PyObject *self, PyObject *args){
+		pyORBIT_Object* pySpaceChargeCalc2p5D = (pyORBIT_Object*) self;
+		SpaceChargeCalc2p5D* cpp_SpaceChargeCalc2p5D = (SpaceChargeCalc2p5D*) pySpaceChargeCalc2p5D->cpp_obj;
+		int smooth_flag;
+		if(!PyArg_ParseTuple(args,"i:setSmoothBinning",&smooth_flag)){
+		ORBIT_MPI_Finalize("PySpaceChargeCalc2p5D.setSmoothBinning(smooth_flag) - method needs a parameter.");
+		}
+		cpp_SpaceChargeCalc2p5D->setSmoothBinning(smooth_flag);	
+		return Py_BuildValue("i",smooth_flag);;
+  }
+
+  //getSmoothBinning() returns the flag of the longitudinal binning method (true=smooth, false(default)=linear)
+  static PyObject* SpaceChargeCalc2p5D_getSmoothBinning(PyObject *self, PyObject *args){
+		pyORBIT_Object* pySpaceChargeCalc2p5D = (pyORBIT_Object*) self;
+		SpaceChargeCalc2p5D* cpp_SpaceChargeCalc2p5D = (SpaceChargeCalc2p5D*) pySpaceChargeCalc2p5D->cpp_obj;
+		int flag_smooth = cpp_SpaceChargeCalc2p5D->getSmoothBinning();
+		return Py_BuildValue("i",flag_smooth);;
+  }
+
 //*/
   //-----------------------------------------------------
   //destructor for python SpaceChargeCalc2p5D class (__del__ method).
@@ -176,6 +196,8 @@ extern "C" {
 		{ "getRhoGrid",  SpaceChargeCalc2p5D_getRhoGrid, METH_VARARGS,"returns the Grid2D with a space charge density"},
 		{ "getPhiGrid",  SpaceChargeCalc2p5D_getPhiGrid, METH_VARARGS,"returns the Grid2D with a space charge potential"},
 		{ "getLongGrid", SpaceChargeCalc2p5D_getLongGrid, METH_VARARGS,"returns the Grid1D with a longitudinal space charge density"},
+		{ "setSmoothBinning", SpaceChargeCalc2p5D_setSmoothBinning, METH_VARARGS,"sets the flag of the longitudinal binning method."},
+		{ "getSmoothBinning", SpaceChargeCalc2p5D_getSmoothBinning, METH_VARARGS,"returns the flag of the longitudinal binning method."},
 		{NULL}
   };
   

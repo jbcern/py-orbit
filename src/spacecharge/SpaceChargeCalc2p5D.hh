@@ -48,7 +48,13 @@ public:
 
 	/** Returns the 1D grid with a longitudinal density. **/
 	Grid1D* getLongGrid();	
+
+	/** Set the longitudinal binning method (linear (default) or smooth) **/
+	void setSmoothBinning(int smooth_flag_in);
 	
+	/** Returns the flag of the longitudinal binning method (linear (default) or smooth) **/
+	int getSmoothBinning();
+
 private:
 	/** Analyses the bunch and does bining. */
 	void bunchAnalysis(Bunch* bunch, double& totalMacrosize, BaseBoundary2D* boundary);
@@ -62,6 +68,7 @@ protected:
 	OrbitUtils::BunchExtremaCalculator* bunchExtremaCalc;
 	
 	double xy_ratio;
+	int smooth_flag;
 };
 //end of SC_SPACECHARGE_CALC_2P5D_H
 #endif

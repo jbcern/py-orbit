@@ -21,9 +21,6 @@ class Grid1D:public OrbitUtils::CppPyWrapper
 {
 public:
 
-  /** Constructor with grid size only */
-  Grid1D(int zSize);
-
   /** Constructor with lattice length */
   Grid1D(int zSize, double length);
 	
@@ -121,6 +118,9 @@ public:
 
   /** synchronizeMPI */
   void synchronizeMPI(pyORBIT_MPI_Comm* comm);
+
+  /** returns length_ **/
+  double getLength();
 
 private:
 

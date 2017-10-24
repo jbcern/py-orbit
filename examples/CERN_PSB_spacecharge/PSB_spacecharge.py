@@ -170,6 +170,9 @@ sizeX = 128
 sizeY = 128
 sizeZ = 64  # Number of longitudinal slies in the 2.5D solver
 calc2p5d = SpaceChargeCalc2p5D(sizeX,sizeY,sizeZ)
+calc2p5d.setSmoothBinning(True) #smooth longitudinal binning flag
+smooth_flag = calc2p5d.getSmoothBinning() #check the smooth binning option
+print 'smooth_flag', smooth_flag
 sc_path_length_min = 0.00000001
 
 # Add the space charge solver to the lattice as child nodes

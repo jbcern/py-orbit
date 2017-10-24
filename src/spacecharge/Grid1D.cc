@@ -19,18 +19,6 @@
 
 using namespace OrbitUtils;
 
-
-/** Constructor with grid size only */
-Grid1D::Grid1D(int zSize):CppPyWrapper(NULL)
-{
-  zSize_ = zSize;
-  zMin_  = -1.0;
-  zMax_  = +1.0;
-  length_ = 0.0;
-  init();
-  setZero();
-}
-
 /** Constructor with grid size and lattice length */
 Grid1D::Grid1D(int zSize, double length):CppPyWrapper(NULL)
 {
@@ -581,7 +569,7 @@ void Grid1D::getIndAndWZSmoothed(double z,
     //double zgloc = (z - zMin_) / dz_;
 	if(length_ == 0)
     {
-		std::cerr<<"Warning!: Lattice length should not be zero for smoothed binning.\n";
+		//std::cerr<<"Warning!: Lattice length should not be zero for smoothed binning.\n";
 		zgloc = (z - zMin_) / dz_;
 	}
 	else
@@ -670,4 +658,9 @@ void Grid1D::synchronizeMPI(pyORBIT_MPI_Comm* pyComm)
   OrbitUtils::BufferStore::getBufferStore()->setUnusedDoubleArr(buff_index0);
   OrbitUtils::BufferStore::getBufferStore()->setUnusedDoubleArr(buff_index1);	
   // ===== MPI end =====
+}
+
+double Grid1D::getLength()
+{
+	return length_;
 }
