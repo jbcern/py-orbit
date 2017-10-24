@@ -216,6 +216,12 @@ output.addParameter('bunchlength', lambda: get_bunch_length(bunch, bunchtwissana
 output.addParameter('dpp_rms', lambda: get_dpp(bunch, bunchtwissanalysis))
 if os.path.exists(output_file):
 	output.import_from_matfile(output_file)
+	
+def file_len(fname):
+	with open(fname) as f:
+        	for n_rows, l in enumerate(f):
+            		pass
+	return n_rows + 1
 
 #----------------------------------------------------
 # Injecting turn by turn
