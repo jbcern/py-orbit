@@ -19,6 +19,17 @@
 
 using namespace OrbitUtils;
 
+/** Constructor with grid size only */
+Grid1D::Grid1D(int zSize):CppPyWrapper(NULL)
+{
+  zSize_ = zSize;
+  zMin_  = -1.0;
+  zMax_  = +1.0;
+  length_ = 0.0;
+  init();
+  setZero();
+}
+
 /** Constructor with grid size and lattice length */
 Grid1D::Grid1D(int zSize, double length):CppPyWrapper(NULL)
 {
