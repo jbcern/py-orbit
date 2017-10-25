@@ -50,14 +50,14 @@ from orbit.collimation import addTeapotCollimatorNode
 from collimator import Collimator
 
 # dictionary
-from output_dictionary import *
+from lib.output_dictionary import *
 
 print "Start ..."
 
 #----------------------------------------------
 # Create folder structure
 #----------------------------------------------
-from mpi_helpers import mpi_mkdir_p
+from lib.mpi_helpers import mpi_mkdir_p
 #mpi_mkdir_p('Input')
 mpi_mkdir_p('Output')
 
@@ -80,6 +80,7 @@ readScriptPTC('ptc/time.txt')
 readScriptPTC('ptc/chrom.txt')
 readScriptPTC('ptc/ramp_magnet.ptc')
 readScriptPTC('ptc/ramp_cavities.ptc')
+#readScriptPTC('ptc/read_FINAL_SETTINGS.ptc')
 readScriptPTC('ptc/energize_lattice.ptc')
 readScriptPTC('ptc/twiss_script.ptc')
 readScriptPTC('ptc/write_FINAL_SETTINGS.ptc')
@@ -171,8 +172,8 @@ sizeY = 128
 sizeZ = 64  # Number of longitudinal slies in the 2.5D solver
 calc2p5d = SpaceChargeCalc2p5D(sizeX,sizeY,sizeZ)
 calc2p5d.setSmoothBinning(True) #smooth longitudinal binning flag
-smooth_flag = calc2p5d.getSmoothBinning() #check the smooth binning option
-print 'smooth_flag', smooth_flag
+#smooth_flag = calc2p5d.getSmoothBinning() #check the smooth binning option
+#print 'smooth_flag', smooth_flag
 sc_path_length_min = 0.00000001
 
 # Add the space charge solver to the lattice as child nodes
@@ -188,7 +189,7 @@ get_dpp = lambda b, bta: np.sqrt(bta.getCorrelation(5,5)) / (b.getSyncParticle()
 get_bunch_length = lambda b, bta: 4 * np.sqrt(bta.getCorrelation(4,4)) / (speed_of_light*b.getSyncParticle().beta())
 get_eps_z = lambda b, bta: 1e9 * 4 * pi * bta.getEmittance(2) / (speed_of_light*b.getSyncParticle().beta())
 
-output_file = 'Output/output.dat'
+output_file = 'Output/output'
 output = Output_dictionary()
 output.addParameter('turn', lambda: turn)
 output.addParameter('intensity', lambda: bunchtwissanalysis.getGlobalMacrosize())
