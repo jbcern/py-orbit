@@ -151,7 +151,6 @@ print '  Beta:     ', bunch.getSyncParticle().beta()
 print '  Charge:   ', bunch.charge(), 'e'
 print '  Mass:     ', bunch.mass(), 'GeV'
 
-ParticleIdNumber().addParticleIdNumbers(bunch) # Give particles unique number ids
 bunch.addPartAttr("macrosize")
 
 lostbunch = Bunch()
@@ -220,15 +219,15 @@ if os.path.exists(output_file):
 	
 def file_len(fname):
 	with open(fname) as f:
-        	for n_rows, l in enumerate(f):
-            		pass
+		for n_rows, l in enumerate(f):
+			pass
 	return n_rows + 1
 
 #----------------------------------------------------
 # Injecting turn by turn
 #----------------------------------------------------
 print '\n\n now start injecting...'
-
+nId = 1
 for index_files in range(index_files, index_files_max+1):
 	# n_rows = 0
 	Particle_distribution_file = 'Input/Distribution_at_injection_full/OrbitL'+str(index_files)+'.dat'	# final distribution with the correct angle
@@ -236,6 +235,8 @@ for index_files in range(index_files, index_files_max+1):
 	print 'Injection file: ', Particle_distribution_file, '-- number of particles: ', N_mp
 	kin_Energy = bunch.getSyncParticle().kinEnergy()
 	bunch_orbit_to_pyorbit(paramsDict["length"], kin_Energy, Particle_distribution_file, bunch) #read in N_mp particles. 
+	ParticleIdNumber().addParticleIdNumbers(bunch,startidnumber=nId)
+	nId += N_mp
 	print 'total number of particles in main bunch: ', bunch.getSizeGlobal()
 	for i in range(bunch.getSize()):
 		bunch.partAttrValue("macrosize", i, 0, macrosize)  #main bunch has finite macrosize for space charge
