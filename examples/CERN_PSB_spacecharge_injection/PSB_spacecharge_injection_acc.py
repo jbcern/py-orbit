@@ -227,16 +227,16 @@ def file_len(fname):
 # Injecting turn by turn
 #----------------------------------------------------
 print '\n\n now start injecting...'
-nId = 1
+#nId = 1
 for index_files in range(index_files, index_files_max+1):
-	# n_rows = 0
-	Particle_distribution_file = 'Input/Distribution_at_injection_full/OrbitL'+str(index_files)+'.dat'	# final distribution with the correct angle
+	Particle_distribution_file = 'Input/Distribution_at_injection_full/IdOrbitL'+str(index_files)+'.dat'	# final distribution with the correct angle
 	N_mp = file_len(Particle_distribution_file)
 	print 'Injection file: ', Particle_distribution_file, '-- number of particles: ', N_mp
 	kin_Energy = bunch.getSyncParticle().kinEnergy()
-	bunch_orbit_to_pyorbit(paramsDict["length"], kin_Energy, Particle_distribution_file, bunch) #read in N_mp particles. 
-	ParticleIdNumber().addParticleIdNumbers(bunch,startidnumber=nId)
-	nId += N_mp
+	bunch_orbit_to_pyorbit(paramsDict["length"], kin_Energy, Particle_distribution_file, bunch, part_id=True) #read in N_mp particles with id in input files. 
+	#bunch_orbit_to_pyorbit(paramsDict["length"], kin_Energy, Particle_distribution_file, bunch) #read in N_mp particles. 
+	#ParticleIdNumber().addParticleIdNumbers(bunch,startidnumber=nId)
+	#nId += N_mp
 	print 'total number of particles in main bunch: ', bunch.getSizeGlobal()
 	for i in range(bunch.getSize()):
 		bunch.partAttrValue("macrosize", i, 0, macrosize)  #main bunch has finite macrosize for space charge
