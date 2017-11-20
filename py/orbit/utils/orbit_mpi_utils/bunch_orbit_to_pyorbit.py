@@ -6,7 +6,7 @@ from orbit_mpi import mpi_datatype
 
 from bunch import Bunch
 
-def bunch_orbit_to_pyorbit(ringLength, kineticEnergy, name_of_orbit_mpi_bunch_file, pyOrbitBunch = None, number_parts = -1):
+def bunch_orbit_to_pyorbit(ringLength, kineticEnergy, name_of_orbit_mpi_bunch_file, pyOrbitBunch = None, number_parts = -1, part_id = False):
 	"""
 	Translates ORBIT_MPI bunch to pyORBIT bunch and returns it. PyORBIT bunch needs 
 	the ring length (m) and energy, mass and charge of the synchronous particle, but 
@@ -41,7 +41,13 @@ def bunch_orbit_to_pyorbit(ringLength, kineticEnergy, name_of_orbit_mpi_bunch_fi
 			ln_nonempty = 1
 	ln_nonempty = orbit_mpi.MPI_Bcast(ln_nonempty,mpi_datatype.MPI_INT,main_rank,comm)	
 
-	var_arr = (0.,0.,0.,0.,0.,0.)
+	if(part_id == True):
+		if(pyOrbitBunch.hasPartAttr("ParticleIdNumber")==0):
+			pyOrbitBunch.addPartAttr("ParticleIdNumber")
+		var_arr = (0.,0.,0.,0.,0.,0.,0)
+	
+	else:
+		var_arr = (0.,0.,0.,0.,0.,0.)
 	
 	n_count = 1
 		
@@ -56,15 +62,22 @@ def bunch_orbit_to_pyorbit(ringLength, kineticEnergy, name_of_orbit_mpi_bunch_fi
 			yp =  float(res_arr[3])/1000.
 			z  = -float(res_arr[4])*L/(2*math.pi)
 			dE =  float(res_arr[5])
-			val_arr = (x,xp,y,yp,z,dE)
+			if(part_id == True):
+				id_nb = int(res_arr[6])
+				val_arr = (x,xp,y,yp,z,dE,id_nb)
+			else:
+				val_arr = (x,xp,y,yp,z,dE)
 			# send the information if rank = 0 is not going to keep this particle
 			if(recv_rank != main_rank):
 				orbit_mpi.MPI_Send(val_arr,mpi_datatype.MPI_DOUBLE,recv_rank,111,comm)
 			else:
-				pyOrbitBunch.addParticle(val_arr[0],val_arr[1],val_arr[2],val_arr[3],val_arr[4],val_arr[5])
+				i = pyOrbitBunch.addParticle(val_arr[0],val_arr[1],val_arr[2],val_arr[3],val_arr[4],val_arr[5])
+				if(part_id == True):
+					pyOrbitBunch.partAttrValue("ParticleIdNumber", i, 0, val_arr[6])
 		if(rank == recv_rank and rank != main_rank):
 			val_arr = orbit_mpi.MPI_Recv(mpi_datatype.MPI_DOUBLE,main_rank,111,comm)
-			pyOrbitBunch.addParticle(val_arr[0],val_arr[1],val_arr[2],val_arr[3],val_arr[4],val_arr[5])
+			i = pyOrbitBunch.addParticle(val_arr[0],val_arr[1],val_arr[2],val_arr[3],val_arr[4],val_arr[5])
+			if(part_id == True):
 		# let's again find out if we want to proceed 
 		if(rank == main_rank):
 			ln_nonempty = 0
