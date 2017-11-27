@@ -15,6 +15,7 @@
 #include "BufferStore.hh"
 #include "LSpaceChargeCalc.hh"
 #include "OrbitConst.hh"
+#include "ParticleMacroSize.hh" // 10/11/17 JBL - import for individually associated macrosize
 #include <complex>
 #include <iostream>
 #include <cmath>
@@ -155,7 +156,11 @@ void LSpaceChargeCalc::trackBunch(Bunch* bunch)
 
 // Convert charge to current for a single macroparticle per unit bin length
 
-  double charge2current = bunch->getCharge() * bunch->getMacroSize() *
+// 10/11/17 JBL - macrosize can be global or individually associated
+  double m_size = bunch->getMacroSize();
+  int has_msize = bunch->hasParticleAttributes("macrosize");
+// 10/11/17 JBL - remove the macrosize here to add it later
+  double charge2current = bunch->getCharge() * //bunch->getMacroSize() *
                           OrbitConst::elementary_charge_MKS * sp->getBeta() *
                           OrbitConst::c / (length / nBins);
 
@@ -179,8 +184,12 @@ void LSpaceChargeCalc::trackBunch(Bunch* bunch)
   if(philocal < -OrbitConst::PI) philocal += 2 * OrbitConst::PI;
   if(philocal >  OrbitConst::PI) philocal -= 2 * OrbitConst::PI;
 
+  if(has_msize > 0) { // 10/11/17 JBL - individually associated macrosize case
+	ParticleMacroSize* macroSizeAttr = (ParticleMacroSize*) bunch->getParticleAttributes("macrosize");
+	m_size = macroSizeAttr->macrosize(j); 
+  }
   double dE = _kick(philocal) * (-1e-9) *
-              bunch->getCharge() * charge2current;
+            bunch->getCharge() * charge2current * m_size; // 10/11/17 JBL - macrosize added here
   coords[j][5] += dE;
   }
 }
